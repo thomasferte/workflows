@@ -112,6 +112,23 @@ jobs:
           cache-environment: false
           cache-downloads: false
 
+      - name: Install Python dependencies
+        if: steps.check-env-files.outputs.python == 'true'
+        run: |
+          source /home/runner/micromamba/etc/profile.d/micromamba.sh
+          micromamba activate micromamba
+          python -m pip install --upgrade pip
+          pip install reservoirpy
+          # Install any additional dependencies your project needs here
+          pip list  # Optional: Check installed packages for debugging
+
+      - name: Set up Python for Quarto
+        if: steps.check-env-files.outputs.python == 'true'
+        run: |
+          echo "QUARTO_PYTHON=/home/runner/micromamba/envs/micromamba/bin/python" >> $GITHUB_ENV
+          echo "RETICULATE_PYTHON=/home/runner/micromamba/envs/micromamba/bin/python" >> $GITHUB_ENV
+          echo "PATH=/home/runner/micromamba/envs/micromamba/bin:$PATH" >> $GITHUB_ENV
+
       - name: Check Cache
         if: steps.check-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v4
