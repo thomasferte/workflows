@@ -107,10 +107,15 @@ jobs:
         if: steps.check-cache.outputs.cache-hit != 'true' && steps.check-env-files.outputs.python == 'true'
         uses: mamba-org/setup-micromamba@v2
         with:
-          environment-file: ${{ steps.check-env-files.outputs.env-file }}
+          environment-file: requirements.txt
           environment-name: micromamba
           cache-environment: false
           cache-downloads: false
+      
+      - name: Install pip dependencies
+        if: steps.check-cache.outputs.cache-hit != 'true' && steps.check-env-files.outputs.python == 'true'
+        run: |
+          micromamba run -n micromamba pip install -r requirements_pip.txt
 
       - name: Check Cache
         if: steps.check-cache.outputs.cache-hit != 'true'
