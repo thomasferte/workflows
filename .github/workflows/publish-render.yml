@@ -59,6 +59,9 @@ jobs:
             quarto add --no-prompt computorg/computo-quarto-extension
           fi
 
+      - name: Install Reservoirpy
+        run: |
+          /home/runner/work/reservoirnet_computo/reservoirnet_computo/renv/python/virtualenvs/renv-python-3.10/bin/python -m pip install --upgrade --no-user 'reservoirpy==0.3.12'
 
       - name: render and publish
         uses: quarto-dev/quarto-actions/publish@v2
