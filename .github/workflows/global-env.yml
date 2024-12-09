@@ -20,11 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install libcurl dependency
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev pkg-config
-
+          sudo apt-get install -y libcurl4-openssl-dev pkg-config libpng-dev
+      
       - name: check environment files
         id: check-env-files
         env:
